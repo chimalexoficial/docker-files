@@ -10,7 +10,10 @@ CONTAINER_PORT=3000
 source .env.network
 ### END ###
 
+BACKEND_IMAGE_NAME=key-value-backend
 BACKEND_CONTAINER_NAME=backend
+
+MONGODB_HOST=mongodb
 
 # Checking if container exists
 if [ "$(docker ps -aq -f name=$BACKEND_CONTAINER_NAME)" ]; then
@@ -20,16 +23,18 @@ if [ "$(docker ps -aq -f name=$BACKEND_CONTAINER_NAME)" ]; then
     exit 1
 fi
 
+docker build -t $BACKEND_IMAGE_NAME \
+    -f backend/Dockerfile.dev \
+    backend
 
 docker run --rm -d --name $BACKEND_CONTAINER_NAME \
     -e KEY_VALUE_DB=$KEY_VALUE_DB \
     -e KEY_VALUE_USER=$KEY_VALUE_USER \
     -e KEY_VALUE_PASSWORD=$KEY_VALUE_PASSWORD \
-    -e PORT=$CONTAINER_PORT
+    -e MONGODB_HOST=$MONGODB_HOST \
+    -e PORT=$CONTAINER_PORT \
     -p $LOCALHOST_PORT:$CONTAINER_PORT \
-    -v $VOLUME_NAME:$VOLUME_CONTAINER_PATH \
-    -v ./db-config/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro \
     --network $NETWORK_NAME \
-    $MONGODB_IMAGE:$MONGODB_TAG
+    $BACKEND_IMAGE_NAME
 
 

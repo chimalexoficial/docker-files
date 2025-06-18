@@ -1,16 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const { healthRouter } = require('./routes/health');
+const { keyValueRouter } = require('./routes/store');
+
 const PORT = process.env.PORT;
 const app = express();
 
 app.use(bodyParser.json());
+app.use('/health', healthRouter);
+app.use('/store', keyValueRouter);
 
-app.get('/health', (req, res) => {
-    res.status(200).send('up & running')
-});
 
-console.log('Connecting to MongoDB...');
+
+
+console.log('Connecting to MongoDB with nodemon!!...');
 
 mongoose.connect(`mongodb://${process.env.MONGODB_HOST}/${process.env.KEY_VALUE_DB}`, {
     auth: {

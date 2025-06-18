@@ -1,15 +1,12 @@
 MONGODB_IMAGE="mongodb/mongodb-community-server"
 MONGODB_TAG="7.0-ubuntu2204"
-source .env.db
 
 # Root credentials for MongoDB database
 ROOT_USER="root-user"
 ROOT_PASSWORD="root-password"
 
 # Key-value credentials
-KEY_VALUE_DB="key-value-db"
-KEY_VALUE_USER="key-value-user"
-KEY_VALUE_PASSWORD="key-value-password"
+source .env.db
 
 ### Connectivity ###
 LOCALHOST_PORT=27017

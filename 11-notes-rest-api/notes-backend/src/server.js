@@ -1,7 +1,8 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT;
 
 app.get('/', (req, res) => {
     return res.json({
@@ -9,6 +10,15 @@ app.get('/', (req, res) => {
     })
 });
 
-app.listen(PORT, () => {
-    console.log(`Notes server listening on PORT ${PORT}`);
-})
+mongoose.connect(process.env.DB_URL)
+    .then(() => {
+        console.log('Connected to MongoDB');
+        console.log('Starting server...');
+        app.listen(PORT, () => {
+            console.log(`Notes server listening on PORT ${PORT}`);
+        });
+    }).catch( err => {
+        console.error('Something went wrong on MongoDB')
+        console.error(err);
+    })
+

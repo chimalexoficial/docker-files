@@ -2,9 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 80;
 
-app.get('/', (req, res) => {
+app.get('/api/notebooks', (req, res) => {
     return res.json({
         message: 'Hello from notebooks :)'
     })

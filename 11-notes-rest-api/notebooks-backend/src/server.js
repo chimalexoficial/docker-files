@@ -6,7 +6,7 @@ const PORT = process.env.PORT;
 
 app.get('/', (req, res) => {
     return res.json({
-        message: 'Hello from notebooks'
+        message: 'Hello from notebooks :)'
     })
 });
 

@@ -1,0 +1,4 @@
+
+include:
+ - path: notebooks-backend/compose.yaml
+ - path: notes-backend/compose.yaml

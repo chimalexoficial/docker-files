@@ -8,6 +8,11 @@ const PORT = process.env.PORT;
 const app = express();
 
 app.use(bodyParser.json());
+app.get('/', (req, res) => {
+    return res.json({
+        message: 'Welcome to the app with hot reloading activated'
+    })
+})
 app.use('/health', healthRouter);
 app.use('/store', keyValueRouter);
 
@@ -24,9 +29,9 @@ mongoose.connect(`mongodb://${process.env.MONGODB_HOST}/${process.env.KEY_VALUE_
     connectTimeoutMS: 500
 }).then(() => {
     app.listen(process.env.PORT, () => {
-        console.log(`Listening on port: ${PORT}`);
+        console.log(`Listening on port: ${PORT} yeih!`);
     })
-    console.log('Connected to MongoDB')
+    console.log('Connected to MongoDB wuhuu!!')
 })
     .catch(err => {
         console.error('Something went wrong! :(');

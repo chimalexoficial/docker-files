@@ -10,7 +10,7 @@ services:
         source: ./reverse-proxy/nginx.conf
         target: /etc/nginx/nginx.conf
     ports:
-      - "8080:80"
+      - 8080:80
     networks:
       - notes-app-net
     depends_on:

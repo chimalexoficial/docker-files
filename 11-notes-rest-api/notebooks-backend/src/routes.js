@@ -4,6 +4,18 @@ const mongoose = require('mongoose');
 const { Notebook } = require('./models');
 
 
+// Middleware to validate ID
+
+const validateId = (req, res, next) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'Notebook not found' });
+    };
+
+    next();
+}
+
 // Create new notebooks: POST '/'
 notebookRouter.post('/', async (req, res) => {
     try {
@@ -37,14 +49,9 @@ notebookRouter.get('/', async (req, res) => {
     }
 });
 // Get a single notebook: GET '/:id' - localhost:8080/api/notebooks/'the-id'
-notebookRouter.get('/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(404).json({ error: 'Notebook not found' });
-        }
-        const notebook = await Notebook.findById(id);
+notebookRouter.get('/:id', validateId, async (req, res) => {
+    try {        
+        const notebook = await Notebook.findById(req.params.id);
 
         if (!notebook) {
             return res.status(404).json({ error: 'Notebook not found' });
